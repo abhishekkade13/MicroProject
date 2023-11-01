@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Enrollment Form</title>
+    <script>
+        // Function to check if a Roll No already exists in the database (simulated here).
+        function doesRollNoExist(rollNo) {
+            // Simulated database check, replace with actual database interaction.
+            const existingRollNos = ['101', '102', '103'];
+            return existingRollNos.includes(rollNo);
+        }
+
+        // Function to handle the form submission.
+        function handleSubmit() {
+            const rollNo = document.getElementById('rollNo').value;
+            const fullName = document.getElementById('fullName').value;
+            const className = document.getElementById('className').value;
+            const birthDate = document.getElementById('birthDate').value;
+            const address = document.getElementById('address').value;
+            const enrollmentDate = document.getElementById('enrollmentDate').value;
+
+            // Check for empty fields.
+            if (!rollNo || !fullName || !className || !birthDate || !address || !enrollmentDate) {
+                alert('All fields are required');
+                return;
+            }
+
+            // Simulate database interaction.
+            if (doesRollNoExist(rollNo)) {
+                // Update data in the database (you'd replace this with actual database code).
+                alert('Data updated in the database');
+            } else {
+                // Save data to the database (you'd replace this with actual database code).
+                alert('Data saved to the database');
+            }
+
+            // Reset the form.
+            document.getElementById('studentForm').reset();
+        }
+
+        // Function to enable or disable buttons and fields.
+        function toggleFormElements(enableSave, enableUpdate, enableReset) {
+            document.getElementById('saveButton').disabled = !enableSave;
+            document.getElementById('updateButton').disabled = !enableUpdate;
+            document.getElementById('resetButton').disabled = !enableReset;
+            document.getElementById('rollNo').disabled = enableUpdate;
+        }
+
+        // Function to handle Roll No input and buttons.
+        function handleRollNoInput() {
+            const rollNo = document.getElementById('rollNo').value;
+            if (rollNo) {
+                if (doesRollNoExist(rollNo)) {
+                    toggleFormElements(false, true, true); // Roll No exists, enable Update and Reset.
+                } else {
+                    toggleFormElements(true, false, true); // Roll No doesn't exist, enable Save and Reset.
+                }
+                document.getElementById('fullName').focus(); // Move to the next field.
+            } else {
+                toggleFormElements(false, false, false); // No Roll No, disable all.
+            }
+        }
+    </script>
+</head>
+<body>
+    <form id="studentForm">
+        <label for="rollNo">Roll No (Primary Key):</label>
+        <input type="text" id="rollNo" oninput="handleRollNoInput()" />
+        <br>
+        <label for="fullName">Full Name:</label>
+        <input type="text" id="fullName" />
+        <br>
+        <label for="className">Class:</label>
+        <input type="text" id="className" />
+        <br>
+        <label for="birthDate">Birth Date:</label>
+        <input type="text" id="birthDate" />
+        <br>
+        <label for="address">Address:</label>
+        <input type="text" id="address" />
+        <br>
+        <label for="enrollmentDate">Enrollment Date:</label>
+        <input type="text" id="enrollmentDate" />
+        <br>
+        <button type="button" id="saveButton" onclick="handleSubmit()" disabled>Save</button>
+        <button type="button" id="updateButton" onclick="handleSubmit()" disabled>Update</button>
+        <button type="button" id="resetButton" onclick="document.getElementById('studentForm').reset()" disabled>Reset</button>
+    </form>
+</body>
+</html>
